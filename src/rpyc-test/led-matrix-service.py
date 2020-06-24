@@ -24,5 +24,5 @@ class LEDMatrixService(rpyc.Service):
 
 if __name__ == '__main__':
   from rpyc.utils.server import ThreadedServer
-  t = ThreadedServer(LEDMatrixService, port=18861)
+  t = ThreadedServer(LEDMatrixService(), port=18861)
   t.start()
