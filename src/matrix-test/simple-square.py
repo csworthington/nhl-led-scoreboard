@@ -6,11 +6,13 @@ class SimpleSquare(TestBase):
   
   def run(self):
     # offset_canvas = self.matrix.CreateFrameCanvas()
-    offset_canvas = self.matrixWrapper._CreateFrameCanvas()
+    # offset_canvas = self.matrixWrapper._CreateFrameCanvas()
+    offset_canvas = self.matrixWrapper.getOffsetPanel()
 
     while True:
       # for x in range(0, self.matrix.width):
-      for x in range(0, self.matrixWrapper._getWidth()):
+      # for x in range(0, self.matrixWrapper._getWidth()):
+      for x in range(0, self.matrixWrapper._getPanelWidth()):
         offset_canvas.SetPixel(x, x, 255, 255, 255)
         offset_canvas.SetPixel(offset_canvas.height - 1 - x, x, 255, 0, 255)
       
