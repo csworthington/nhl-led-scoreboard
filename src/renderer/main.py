@@ -227,6 +227,8 @@ class MainRenderer:
 
         self.matrix.clear()
 
+        # play sound here
+
         # Go through the frames
         x = 0
         while x is not 5:
