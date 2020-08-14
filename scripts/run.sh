@@ -7,4 +7,4 @@ cd "${DIR}/.."
 # start python virtualenv
 source ./nhl-scoreboard/bin/activate
 
-sudo python3 src/main.py --led-gpio-mapping=adafruit-hat-pwm --led-slowdown-gpio=3
+sudo python3 src/main.py --led-gpio-mapping=regular --led-slowdown-gpio=4 --led-brightness=20
