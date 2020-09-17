@@ -1,7 +1,8 @@
-# from rgbmatrix import RGBMatrixOptions, graphics
+from rgbmatrix import RGBMatrixOptions, graphics
 import collections
 import argparse
 import os
+import sys
 import debug
 from datetime import datetime, timezone
 import math
@@ -29,7 +30,7 @@ def args():
     parser.add_argument("--led-pwm-bits", action="store", help="Bits used for PWM. Range 1..11. (Default: 11)",
                         default=11, type=int)
     parser.add_argument("--led-brightness", action="store", help="Sets brightness level. Range: 1..100. (Default: 100)",
-                        default=100, type=int)
+                        default=20, type=int)
     parser.add_argument("--led-gpio-mapping", help="Hardware Mapping: regular, adafruit-hat, adafruit-hat-pwm",
                         choices=['regular', 'adafruit-hat', 'adafruit-hat-pwm'], type=str)
     parser.add_argument("--led-scan-mode", action="store",
@@ -52,42 +53,50 @@ def args():
     parser.add_argument("--led-multiplexing", action="store",
                         help="Multiplexing type: 0 = direct; 1 = strip; 2 = checker; 3 = spiral; 4 = Z-strip; 5 = ZnMirrorZStripe; 6 = coreman; 7 = Kaler2Scan; 8 = ZStripeUneven. (Default: 0)",
                         default=0, type=int)
+    
+    parser.add_argument('--socket-addr', action='store',
+                        help='Address for ZMQ socket. Default tcp://*:5555', default='tcp://*:5555', type=str)
+
+
+    parser.add_argument('--panel-offset', action='store',
+                        help='Set the panel offset for displaying this scoreboard', 
+                        type=int, default=0, choices=range(0,4))
 
     return parser.parse_args()
 
 
-# def led_matrix_options(args):
-#     options = RGBMatrixOptions()
+def led_matrix_options(args):
+    options = RGBMatrixOptions()
 
-#     if args.led_gpio_mapping != None:
-#         options.hardware_mapping = args.led_gpio_mapping
+    if args.led_gpio_mapping != None:
+        options.hardware_mapping = args.led_gpio_mapping
 
-#     options.rows = args.led_rows
-#     options.cols = args.led_cols
-#     options.chain_length = args.led_chain
-#     options.parallel = args.led_parallel
-#     options.row_address_type = args.led_row_addr_type
-#     options.multiplexing = args.led_multiplexing
-#     options.pwm_bits = args.led_pwm_bits
-#     options.brightness = args.led_brightness
-#     options.pwm_lsb_nanoseconds = args.led_pwm_lsb_nanoseconds
-#     options.led_rgb_sequence = args.led_rgb_sequence
-#     try:
-#         options.pixel_mapper_config = args.led_pixel_mapper
-#     except AttributeError:
-#         debug.warning("Your compiled RGB Matrix Library is out of date.")
-#         debug.warning("The --led-pixel-mapper argument will not work until it is updated.")
+    options.rows = args.led_rows
+    options.cols = args.led_cols
+    options.chain_length = args.led_chain
+    options.parallel = args.led_parallel
+    options.row_address_type = args.led_row_addr_type
+    options.multiplexing = args.led_multiplexing
+    options.pwm_bits = args.led_pwm_bits
+    options.brightness = args.led_brightness
+    options.pwm_lsb_nanoseconds = args.led_pwm_lsb_nanoseconds
+    options.led_rgb_sequence = args.led_rgb_sequence
+    try:
+        options.pixel_mapper_config = args.led_pixel_mapper
+    except AttributeError:
+        debug.warning("Your compiled RGB Matrix Library is out of date.")
+        debug.warning("The --led-pixel-mapper argument will not work until it is updated.")
 
-#     if args.led_show_refresh:
-#         options.show_refresh_rate = 1
+    if args.led_show_refresh:
+        options.show_refresh_rate = 1
 
-#     if args.led_slowdown_gpio != None:
-#         options.gpio_slowdown = args.led_slowdown_gpio
+    if args.led_slowdown_gpio != None:
+        options.gpio_slowdown = args.led_slowdown_gpio
 
-#     if args.led_no_hardware_pulse:
-#         options.disable_hardware_pulsing = True
+    if args.led_no_hardware_pulse:
+        options.disable_hardware_pulsing = True
 
-#     return options
+    return options
 
 
 def deep_update(source, overrides):
