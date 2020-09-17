@@ -13,6 +13,7 @@ class ZMQClient():
 
   def send_image(self, image):
     self.socket.send_pyobj(image)
+    # TODO: possibly do not wait for reply?
     message = self.socket.recv()
   
 

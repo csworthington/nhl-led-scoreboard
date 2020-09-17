@@ -3,7 +3,7 @@ import math
 from utils import round_normal
 
 # libraries used for testing
-from ZmqClient import ZMQClient
+from renderer.ZmqClient import ZMQClient
 import time
 
 DEBUG = False
@@ -17,18 +17,22 @@ class Matrix():
     self.width = 64
     self.height = 32
 
-    self.image = Image.new('RGBA', (self.width, self.height))
+    # self.image = Image.new('RGBA', (self.width, self.height))
+    self.image = Image.new('RGB', (self.width, self.height))
     self.draw = ImageDraw.Draw(self.image)
 
     self.pixels = self.image.load()
 
+    # TODO figure out if this can be removed
+    self.use_canvas = False
+
     self.zmq_client = zmq_client
   
 
-  def parse_location(self, value, dimension)
-  ''' 
-  Check if the number is a percentage and calculate pixels
-  '''
+  def parse_location(self, value, dimension):
+    ''' 
+    Check if the number is a percentage and calculate pixels
+    '''
     # Check if number is percentage and calculate pixels
     if (isinstance(value, str) and value.endswith('%')):
       return round_normal((float(value[:-1]) / 100.0) * (dimension - 1))
@@ -118,6 +122,7 @@ class Matrix():
   
 
   def send_to_matrix(self):
+    
     self.zmq_client.send_image(self.image)
 
   def network_issue_indicator(self):
@@ -132,4 +137,9 @@ if __name__ == '__main__':
   zmq_client = ZMQClient(host_name='tcp://localhost:5555')
   image_matrix = Matrix(panel_number=1, zmq_client=zmq_client)
 
+  print('testing drawing rectangle...')
   image_matrix.draw_rectangle(position=[2,2], size=[20, 20], color=(0,255,0))
+  time.sleep(3)
+
+  print('finishing...')
+  zmq_client.close_socket()
