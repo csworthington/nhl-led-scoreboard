@@ -1,5 +1,5 @@
 from renderer.ZmqClient import ZMQClient
-from renderer.ImageMatrix import Matrix
+from renderer.MatrixBuffer import MatrixBuffer
 from utils import get_file
 
 import time
@@ -8,7 +8,7 @@ from PIL import ImageFont
 
 if __name__ == '__main__':
   zmq_client = ZMQClient(host_name='tcp://localhost:5555')
-  image_matrix = Matrix(panel_number=1, zmq_client=zmq_client)
+  image_matrix = MatrixBuffer(panel_number=1, zmq_client=zmq_client)
 
   # load font
   font = ImageFont.truetype(get_file("assets/fonts/04B_24__.TTF"), 8)

@@ -4,7 +4,7 @@ from utils import round_normal
 
 DEBUG = False
 
-class Matrix():
+class MatrixBuffer():
   def __init__(self, panel_number, zmq_client):
     self.panel_number = panel_number
 
