@@ -28,10 +28,12 @@ def run():
     # matrixOptions = led_matrix_options(commandArgs)
     # matrixOptions.drop_privileges = False
 
+    print('panel offset = ' + str(commandArgs.panel_offset))
+
     # Initialize the matrix
     matrix = MatrixBuffer(
-        panel_number=1, 
-        zmq_client=ZMQClient(host_name='tcp://localhost:5555')
+        panel_offset=commandArgs.panel_offset, 
+        zmq_client=ZMQClient(host_name='tcp://localhost:5555', panel_offset=commandArgs.panel_offset)
     )
     # matrix = Matrix(RGBMatrix(options = matrixOptions))
 

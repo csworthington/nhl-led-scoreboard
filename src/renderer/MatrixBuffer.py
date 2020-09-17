@@ -5,8 +5,8 @@ from utils import round_normal
 DEBUG = False
 
 class MatrixBuffer():
-  def __init__(self, panel_number, zmq_client):
-    self.panel_number = panel_number
+  def __init__(self, panel_offset, zmq_client):
+    self.panel_offset = panel_offset
 
     self.position_cache = {}
     
@@ -327,7 +327,9 @@ class MatrixBuffer():
   
 
   def send_to_matrix(self):
-    
+    '''
+    Send the underlying pillow canvas to the matrix to be displayed.
+    '''
     self.zmq_client.send_image(self.image)
 
   def network_issue_indicator(self):
