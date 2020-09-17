@@ -19,9 +19,6 @@ class Matrix():
 
     self.pixels = self.image.load()
 
-    # TODO figure out if this can be removed
-    self.use_canvas = False
-
     self.zmq_client = zmq_client
   
 
@@ -130,6 +127,7 @@ class Matrix():
         font=font
       )
 
+    # Draw some green pixels for debugging
     if (DEBUG):
       self.draw_pixel(
         (x, y),
@@ -300,6 +298,7 @@ class Matrix():
     self.position_cache[id] = position
 
   def render(self):
+    # Draw a green cross on the display to aid debugging
     if (DEBUG):
       for x in range(self.height):
         self.draw_pixel(
@@ -320,15 +319,8 @@ class Matrix():
           (x, self.height / 2),
           (0, 255, 0)
         )
-
-    if (self.use_canvas):
-      # self.canvas.SetImage(self.image.convert('RGB'), 0, 0)
-      # self.canvas = self.matrix.SwapOnVSync(self.canvas)
-      self.send_to_matrix()
-      
-    else:
-      # self.matrix.SetImage(self.image.convert('RGB'))
-      self.send_to_matrix()
+    
+    self.send_to_matrix()
 
   def clear(self):
     self.image.paste(0, (0, 0, self.width, self.height))
