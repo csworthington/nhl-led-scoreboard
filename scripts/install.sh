@@ -10,26 +10,26 @@ sudo apt-get install python3-setuptools
 sudo apt-get install build-essential
 
 # Pull submodule and ignore changes from script
-git submodule update --init --recursive
-git config submodule.matrix.ignore all
+# git submodule update --init --recursive
+# git config submodule.matrix.ignore all
 
-sudo apt-get update
-sudo apt-get -y install python3-dev python3-pillow
+# sudo apt-get update
+# sudo apt-get -y install python3-dev python3-pillow
 
-cd submodules/matrix || exit
-echo "Running rgbmatrix installation..."
+# cd submodules/matrix || exit
+# echo "Running rgbmatrix installation..."
 
-make build-python PYTHON=$(which python3)
-sudo make install-python PYTHON=$(which python3)
-cd bindings
-sudo pip3 install -e python/
+# make build-python PYTHON=$(which python3)
+# sudo make install-python PYTHON=$(which python3)
+# cd bindings
+# sudo pip3 install -e python/
 
-cd ../../../
+# cd ../../../
 
-echo "Installing required dependencies. This may take some time (10-20 minutes-ish)..."
-git reset --hard
-git fetch origin --prune
-git pull
+# echo "Installing required dependencies. This may take some time (10-20 minutes-ish)..."
+# git reset --hard
+# git fetch origin --prune
+# git pull
 
 sudo pip3 install requests 
 
