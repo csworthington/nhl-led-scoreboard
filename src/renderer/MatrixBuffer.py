@@ -237,6 +237,21 @@ class MatrixBuffer():
         pixel.color
       )
   
+  def draw_line(self, start_coords, end_coords, colour):
+    """
+    Draw a line on the pillow canvas
+
+    Args:
+      start_coords: the starting coordinates of the line in (x,y) format
+      end_coords: the ending coordinates of the line in (x,y) format
+      colour: the colour of the line in RGB format
+    """
+    self.draw.line(
+      xy=(start_coords, end_coords), 
+      fill=colour,
+      width=0
+    )
+    pass
 
   def draw_text_layout(self, layout, text, align="left", backgroundColor=None):
     self.cache_position(
