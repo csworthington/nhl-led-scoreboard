@@ -40,8 +40,12 @@ def run():
     # Print some basic info on startup
     debug.info("{} - v{} ({}x{})".format(SCRIPT_NAME, SCRIPT_VERSION, matrix.width, matrix.height))
 
+    # Get config file name by adding panel offset number to end of string
+    config_file_name = 'config_{0}'.format(commandArgs.panel_offset)
+
     # Read scoreboard options from config.json if it exists
-    config = ScoreboardConfig("config", commandArgs, (matrix.width, matrix.height))
+    # config = ScoreboardConfig("config", commandArgs, (matrix.width, matrix.height))
+    config = ScoreboardConfig(config_file_name, commandArgs, (matrix.width, matrix.height))
 
     debug.set_debug_status(config)
 
