@@ -66,7 +66,7 @@ class MainRenderer:
                 debug.info('This is a new day')
                 return
             self.data.refresh_data()
-            self.boards._off_day(self.data, self.matrix,self.sleepEvent)
+            self.boards._off_day(self.data, self.matrix, self.sleepEvent)
 
     def __render_game_day(self):
         debug.info("Showing Game")

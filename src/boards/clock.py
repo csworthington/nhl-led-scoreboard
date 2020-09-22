@@ -1,5 +1,5 @@
 from PIL import Image, ImageFont, ImageDraw, ImageSequence
-from rgbmatrix import graphics
+# from rgbmatrix import graphics
 import datetime
 from time import sleep
 from utils import center_text

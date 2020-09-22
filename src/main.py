@@ -2,14 +2,18 @@ import sys
 from datetime import datetime, timedelta
 from data.scoreboard_config import ScoreboardConfig
 from renderer.main import MainRenderer
-from rgbmatrix import RGBMatrix, RGBMatrixOptions
-from utils import args, led_matrix_options
+# from rgbmatrix import RGBMatrix, RGBMatrixOptions
+# from utils import args, led_matrix_options
+from utils import args
 from data.data import Data
 import threading
 from sbio.dimmer import Dimmer
 from sbio.pushbutton import PushButton
-from renderer.matrix import Matrix
+# from renderer.matrix import Matrix
 import debug
+
+from renderer.MatrixBuffer import MatrixBuffer
+from renderer.ZmqClient import ZMQClient
 
 SCRIPT_NAME = "NHL-LED-SCOREBOARD"
 
@@ -21,17 +25,27 @@ def run():
     commandArgs = args()
 
     # Check for led configuration arguments
-    matrixOptions = led_matrix_options(commandArgs)
-    matrixOptions.drop_privileges = False
+    # matrixOptions = led_matrix_options(commandArgs)
+    # matrixOptions.drop_privileges = False
+
+    print('panel offset = ' + str(commandArgs.panel_offset))
 
     # Initialize the matrix
-    matrix = Matrix(RGBMatrix(options = matrixOptions))
+    matrix = MatrixBuffer(
+        panel_offset=commandArgs.panel_offset, 
+        zmq_client=ZMQClient(host_name='tcp://localhost:5555', panel_offset=commandArgs.panel_offset)
+    )
+    # matrix = Matrix(RGBMatrix(options = matrixOptions))
 
     # Print some basic info on startup
     debug.info("{} - v{} ({}x{})".format(SCRIPT_NAME, SCRIPT_VERSION, matrix.width, matrix.height))
 
+    # Get config file name by adding panel offset number to end of string
+    config_file_name = 'config_{0}'.format(commandArgs.panel_offset)
+
     # Read scoreboard options from config.json if it exists
-    config = ScoreboardConfig("config", commandArgs, (matrix.width, matrix.height))
+    # config = ScoreboardConfig("config", commandArgs, (matrix.width, matrix.height))
+    config = ScoreboardConfig(config_file_name, commandArgs, (matrix.width, matrix.height))
 
     debug.set_debug_status(config)
 

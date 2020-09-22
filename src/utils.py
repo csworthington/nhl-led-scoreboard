@@ -2,6 +2,7 @@ from rgbmatrix import RGBMatrixOptions, graphics
 import collections
 import argparse
 import os
+import sys
 import debug
 from datetime import datetime, timezone
 import math
@@ -29,7 +30,7 @@ def args():
     parser.add_argument("--led-pwm-bits", action="store", help="Bits used for PWM. Range 1..11. (Default: 11)",
                         default=11, type=int)
     parser.add_argument("--led-brightness", action="store", help="Sets brightness level. Range: 1..100. (Default: 100)",
-                        default=100, type=int)
+                        default=20, type=int)
     parser.add_argument("--led-gpio-mapping", help="Hardware Mapping: regular, adafruit-hat, adafruit-hat-pwm",
                         choices=['regular', 'adafruit-hat', 'adafruit-hat-pwm'], type=str)
     parser.add_argument("--led-scan-mode", action="store",
@@ -52,6 +53,14 @@ def args():
     parser.add_argument("--led-multiplexing", action="store",
                         help="Multiplexing type: 0 = direct; 1 = strip; 2 = checker; 3 = spiral; 4 = Z-strip; 5 = ZnMirrorZStripe; 6 = coreman; 7 = Kaler2Scan; 8 = ZStripeUneven. (Default: 0)",
                         default=0, type=int)
+    
+    parser.add_argument('--socket-addr', action='store',
+                        help='Address for ZMQ socket. Default tcp://*:5555', default='tcp://*:5555', type=str)
+
+
+    parser.add_argument('--panel-offset', action='store',
+                        help='Set the panel offset for displaying this scoreboard', 
+                        type=int, default=0, choices=range(0,4))
 
     return parser.parse_args()
 

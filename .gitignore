@@ -138,4 +138,8 @@ assets/logos/*
 
 #nhl-led-scoreboard
 config/config.json
+config/config_0.json
+config/config_1.json
+config/config_2.json
+config/config_3.json
 config/config.json.backup
