@@ -247,12 +247,34 @@ class MainRenderer:
 
     def draw_end_period_indicator(self):
         """TODO: change the width depending how much time is left to the intermission"""
-        color = self.matrix.graphics.Color(0, 255, 0)
-        self.matrix.graphics.DrawLine(self.matrix.matrix, 24, self.matrix.height - 2, 40, self.matrix.height - 2, color)
-        self.matrix.graphics.DrawLine(self.matrix.matrix, 23, self.matrix.height - 1, 41, self.matrix.height - 1, color)
+        # color = self.matrix.graphics.Color(0, 255, 0)
+        color = (0, 255, 0)
+        # self.matrix.graphics.DrawLine(self.matrix.matrix, 24, self.matrix.height - 2, 40, self.matrix.height - 2, color)
+        self.matrix.draw_line(
+            start_coords=(24, self.matrix.height - 2),
+            end_coords=(40, self.matrix.height - 2),
+            colour=color
+        )
+        # self.matrix.graphics.DrawLine(self.matrix.matrix, 23, self.matrix.height - 1, 41, self.matrix.height - 1, color)
+        self.matrix.draw_line(
+            start_coords=(23, self.matrix.height - 1),
+            end_coords=(41, self.matrix.height - 1),
+            colour=color
+        )
 
     def draw_end_of_game_indicator(self):
         """TODO: change the width depending how much time is left to the intermission"""
-        color = self.matrix.graphics.Color(255, 0, 0)
-        self.matrix.graphics.DrawLine(self.matrix.matrix, 24, self.matrix.height - 2, 40, self.matrix.height - 2, color)
-        self.matrix.graphics.DrawLine(self.matrix.matrix, 23, self.matrix.height - 1, 41, self.matrix.height - 1, color)
+        # color = self.matrix.graphics.Color(255, 0, 0)
+        color = (255, 0, 0)
+        # self.matrix.graphics.DrawLine(self.matrix.matrix, 24, self.matrix.height - 2, 40, self.matrix.height - 2, color)
+        self.matrix.draw_line(
+            start_coords=(24, self.matrix.height - 2),
+            end_coords=(40, self.matrix.height - 2),
+            colour=color
+        )
+        # self.matrix.graphics.DrawLine(self.matrix.matrix, 23, self.matrix.height - 1, 41, self.matrix.height - 1, color)
+        self.matrix.draw_line(
+            start_coords=(23, self.matrix.height - 1),
+            end_coords=(41, self.matrix.height - 1),
+            colour=color
+        )
