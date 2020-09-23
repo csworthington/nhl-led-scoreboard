@@ -54,9 +54,9 @@ def args():
                         help="Multiplexing type: 0 = direct; 1 = strip; 2 = checker; 3 = spiral; 4 = Z-strip; 5 = ZnMirrorZStripe; 6 = coreman; 7 = Kaler2Scan; 8 = ZStripeUneven. (Default: 0)",
                         default=0, type=int)
     
+    # Custom arguments for ZMQ Server
     parser.add_argument('--socket-addr', action='store',
                         help='Address for ZMQ socket. Default tcp://*:5555', default='tcp://*:5555', type=str)
-
 
     parser.add_argument('--panel-offset', action='store',
                         help='Set the panel offset for displaying this scoreboard', 
