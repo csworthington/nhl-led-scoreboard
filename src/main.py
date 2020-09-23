@@ -35,7 +35,9 @@ def run():
         panel_offset=commandArgs.panel_offset, 
         zmq_client=ZMQClient(host_name='tcp://localhost:5555', panel_offset=commandArgs.panel_offset)
     )
-    # matrix = Matrix(RGBMatrix(options = matrixOptions))
+
+    # Set panel number for debug
+    debug.set_panel_number(commandArgs.panel_offset)
 
     # Print some basic info on startup
     debug.info("{} - v{} ({}x{})".format(SCRIPT_NAME, SCRIPT_VERSION, matrix.width, matrix.height))
@@ -44,11 +46,11 @@ def run():
     config_file_name = 'config_{0}'.format(commandArgs.panel_offset)
 
     # Read scoreboard options from config.json if it exists
-    # config = ScoreboardConfig("config", commandArgs, (matrix.width, matrix.height))
     config = ScoreboardConfig(config_file_name, commandArgs, (matrix.width, matrix.height))
 
+    # Set up debug
     debug.set_debug_status(config)
-
+    
     data = Data(config)
 
     # Event used to sleep when rendering
