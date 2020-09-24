@@ -42,7 +42,7 @@ def args():
     parser.add_argument("--led-show-refresh", action="store_true",
                         help="Shows the current refresh rate of the LED panel.")
     parser.add_argument("--led-slowdown-gpio", action="store",
-                        help="Slow down writing to GPIO. Range: 0..4. (Default: 1)", choices=range(5), type=int)
+                        help="Slow down writing to GPIO. Range: 0..4. (Default: 4)", choices=range(5), type=int, default=4)
     parser.add_argument("--led-no-hardware-pulse", action="store", help="Don't use hardware pin-pulse generation.")
     parser.add_argument("--led-rgb-sequence", action="store",
                         help="Switch if your matrix has led colors swapped. (Default: RGB)", default="RGB", type=str)
@@ -57,6 +57,9 @@ def args():
     # Custom arguments for ZMQ Server
     parser.add_argument('--socket-addr', action='store',
                         help='Address for ZMQ socket. Default tcp://*:5555', default='tcp://*:5555', type=str)
+    # Argument to enable test mode
+    parser.add_argument('--test-mode', action='store',
+                        help='Enable test mode. Does not start any scoreboard processes', default=False, type=bool)
 
     parser.add_argument('--panel-offset', action='store',
                         help='Set the panel offset for displaying this scoreboard', 

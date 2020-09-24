@@ -7,6 +7,11 @@ from PIL import Image
 
 from renderer.ZmqClient import ZMQMessage
 
+def start_subprocess(panel_offset=0):
+  p = subprocess.Popen(['python3', './src/main.py', '--panel-offset={0}'.format(panel_offset)])
+  print('started subprocess with pid=' + str(p.pid))
+  return p
+
 def run():
   # Get supplied command line arguments
   command_args = args()
@@ -29,17 +34,17 @@ def run():
 
   print('Server started at ' + socket_address)
 
-  print('Starting subprocesses...')
+  if (command_args.test_mode is False):
+    print('Starting subprocesses...')
 
-  # Declare list to contain each subprocess
-  processes = list()
-  num_processes = command_args.led_chain
-  print('number of subprocesses = ' + str(num_processes))
+    # Declare list to contain each subprocess
+    processes = list()
+    num_processes = command_args.led_chain
+    print('spawning {0} subprocesses...'.format(num_processes))
 
-  for i in range(num_processes):
-    p = subprocess.Popen(['python3', './src/main.py', '--panel-offset={0}'.format(i)])
-    processes.append(p)
-    print('started subprocess ' + str(i))
+    for i in range(num_processes):
+      processes.append(start_subprocess(panel_offset=i))
+      
 
 
   print('Waiting for input...')
@@ -63,10 +68,6 @@ def run():
       matrix.SwapOnVSync(offscreen_canvas)
     else:
       print('type mismatch')
-
-
-    
-    
 
     socket.send(b'done')
   
