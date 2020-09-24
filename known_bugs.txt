@@ -1,0 +1,1 @@
+Throws error during power play while drawing line (draw_line attribute error? something with start coords) (NameError: name 'start_coords' is not defined)
