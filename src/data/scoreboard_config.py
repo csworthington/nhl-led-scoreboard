@@ -104,7 +104,8 @@ class ScoreboardConfig:
         j = {}
         path = get_file("config/{}".format(filename))
         if os.path.isfile(path):
-            j = json.load(open(path))
+            with open(path) as json_file:
+                j = json.load(json_file)
         return j
 
     def __get_config(self, base_filename, error=None):
