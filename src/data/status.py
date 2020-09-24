@@ -57,3 +57,14 @@ class Status:
         except TypeError:
             debug.error('The Argument provided for status.is_playoff is missing or not right.')
             return False
+    
+
+    def __str__(self):
+        string = ''
+        string += 'season_info = ' + str(self.season_info) + '\n'
+        string += 'Preview = ' + str(self.Preview) + '\n'
+        string += 'Live = ' + str(self.Live) + '\n'
+        string += 'GameOver = ' + str(self.GameOver) + '\n'
+        string += 'Final = ' + str(self.Final) + '\n'
+        string += 'Irregular = ' + str(self.Irregular) + '\n'
+        return string
