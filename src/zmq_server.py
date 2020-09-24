@@ -2,10 +2,22 @@ from rgbmatrix import RGBMatrix, RGBMatrixOptions
 from utils import args, led_matrix_options
 import zmq
 import os, sys, time
+import json
 import subprocess
 from PIL import Image
 
-from renderer.ZmqClient import ZMQMessage
+# import simpleaudio.functionchecks as fc
+
+from renderer.ZmqClient import ZMQImageMessage, ZMQChangeTeamMessage
+
+
+def change_favourite_team(panel_number, new_team):
+  # Load json file
+  file_name = './config/config_'.format(panel_number)
+
+  with open(file_name, 'w') as json_file:
+    data = json.load(json_file)
+    print('old favourite team is ' + str(data['preferences']['teams']))
 
 def run():
   # Get supplied command line arguments
@@ -56,11 +68,13 @@ def run():
     message = socket.recv_pyobj()
     # print('received request')
     
-    if (isinstance(message, ZMQMessage)):
+    if (isinstance(message, ZMQImageMessage)):
       x_image_location = 64 * message.panel_offset
       offscreen_canvas.SetImage(empty_image, x_image_location, 0)
       offscreen_canvas.SetImage(message.image, x_image_location, 0)
       matrix.SwapOnVSync(offscreen_canvas)
+    elif (isinstance(message, ZMQChangeTeamMessage)):
+      print('received change team message!')
     else:
       print('type mismatch')
 

@@ -1,12 +1,27 @@
 import zmq
 
-class ZMQMessage():
+class ZMQImageMessage():
   def __init__(self, image, panel_offset):
     self.image = image
     self.panel_offset = panel_offset
   
   def __str__(self):
     return ''
+
+
+def ZMQMessage():
+  def __init__(self, panel_offset):
+    self.panel_offset = panel_offset
+
+
+def ZMQHornMessage(ZMQMessage):
+  def __init__(self, panel_offset):
+    super().__init__(panel_offset)
+
+class ZMQChangeTeamMessage():
+  def __init__(self, panel_number, team):
+    self.team = team
+    self.panel_number = panel_number
 
 
 class ZMQClient():
@@ -22,7 +37,7 @@ class ZMQClient():
 
   def send_image(self, image):
     # message = (self.panel_number, image)
-    message = ZMQMessage(image=image, panel_offset=self.panel_offset)
+    message = ZMQImageMessage(image=image, panel_offset=self.panel_offset)
     # self.socket.send_pyobj(image)
     self.socket.send_pyobj(message)
     # TODO: possibly do not wait for reply?
