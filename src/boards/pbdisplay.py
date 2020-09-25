@@ -1,5 +1,4 @@
 from PIL import Image, ImageFont, ImageDraw, ImageSequence
-# from rgbmatrix import graphics
 from time import sleep
 from utils import center_text,get_file
 
